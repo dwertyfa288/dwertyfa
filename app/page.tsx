@@ -156,14 +156,24 @@ export default function Home() {
                 Смотреть проекты
                 <span aria-hidden="true">↓</span>
               </a>
-              <a
-                className="text-link"
-                href="https://github.com/RoxyBoost"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub <span aria-hidden="true">↗</span>
-              </a>
+              <div className="hero-socials">
+                <a
+                  className="text-link"
+                  href="https://github.com/RoxyBoost"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub <span aria-hidden="true">↗</span>
+                </a>
+                <a
+                  className="text-link"
+                  href="https://t.me/dwertyfa"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Telegram <span aria-hidden="true">↗</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -498,16 +508,26 @@ export default function Home() {
           <br />
           <em>что-то сильное.</em>
         </h2>
-        <a
-          className="footer-link"
-          href="https://github.com/RoxyBoost"
-          target="_blank"
-          rel="noreferrer"
-          data-reveal
-        >
-          Открыть GitHub
-          <span aria-hidden="true">↗</span>
-        </a>
+        <div className="footer-links" data-reveal>
+          <a
+            className="footer-link"
+            href="https://github.com/RoxyBoost"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Открыть GitHub
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a
+            className="footer-link"
+            href="https://t.me/dwertyfa"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Написать в Telegram
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
         <div className="footer-bottom">
           <span>© 2026 DWERTYFA</span>
           <span>DESIGN × CODE × SYSTEMS</span>
