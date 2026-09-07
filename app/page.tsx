@@ -1,539 +1,587 @@
-"use client";
-
-import {
-  useEffect,
-  useRef,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
+import Image from "next/image";
 import DeveloperScene from "./DeveloperScene";
+import PortfolioMotion from "./PortfolioMotion";
 
-const stack = [
-  "REACT",
-  "TYPESCRIPT",
-  "NEXT.JS",
-  "NODE.JS",
-  "API",
-  "LINUX",
-  "NGINX",
-  "POSTGRESQL",
-  "DOCKER",
-  "CI/CD",
+const basePath = process.env.BASE_PATH ?? "";
+const telegram = "https://t.me/dwertyfa";
+const github = "https://github.com/RoxyBoost";
+const projects = [
+  {
+    id: "nova",
+    number: "01",
+    name: "Nova Prestige",
+    category: "НЕДВИЖИМОСТЬ · ПРОМО-САЙТ",
+    href: "https://novaprestige.ru/",
+    description:
+      "Цифровое пространство для приватного жилого дома в центре Бишкека. Архитектура, атмосфера и внимание к каждой детали.",
+    tags: ["Веб-разработка", "Адаптивный интерфейс", "Анимации"],
+  },
+  {
+    id: "roxy",
+    number: "02",
+    name: "Roxy Boost",
+    category: "VPN-СЕРВИС · FULL-STACK",
+    href: "https://roxyvpn.ru/",
+    description:
+      "От серверной инфраструктуры до последнего экрана. VPN-продукт, который я разрабатывал как единую систему.",
+    tags: ["Инфраструктура", "Backend", "Web app"],
+  },
+  {
+    id: "montage",
+    number: "03",
+    name: "danek montage",
+    category: "КРЕАТИВНОЕ ПОРТФОЛИО",
+    href: "https://fazedanek-hub.github.io/danekmontage/",
+    description:
+      "Работы, которые говорят движением. Динамичное портфолио видеомонтажёра для блогеров и брендов.",
+    tags: ["React", "Motion UI", "Веб-разработка"],
+  },
+  {
+    id: "ksusha",
+    number: "04",
+    name: "Hey Ksusha",
+    category: "ОБРАЗОВАНИЕ · ЛЕНДИНГ",
+    href: "https://heyksusha.ru/intensive",
+    description:
+      "Выразительный сайт интенсива с продуманным сценарием: от первого впечатления до записи и оплаты.",
+    tags: ["Арт-дирекшн", "Лендинг", "Платежи"],
+  },
 ];
-
-const expertise = [
+const services = [
   {
     number: "01",
-    title: "Продуктовая разработка",
-    text: "Перевожу идею в работающий интерфейс: архитектура, UX, адаптив, интеграции и аккуратный production-код.",
-    meta: "FRONTEND / BACKEND / UX",
+    title: "Интерфейс, который",
+    accent: "чувствуется.",
+    description:
+      "Разрабатываю сайты и приложения с характером. Продумываю логику, адаптив и движение — чтобы каждая деталь работала на впечатление.",
+    tags: "REACT / NEXT.JS / TYPESCRIPT",
+    icon: "↗",
   },
   {
     number: "02",
-    title: "Инфраструктура",
-    text: "Проектирую окружение, деплой и сетевой слой так, чтобы продукт оставался быстрым, наблюдаемым и управляемым.",
-    meta: "LINUX / DOCKER / NGINX",
+    title: "Система, на которую",
+    accent: "можно положиться.",
+    description:
+      "За красивым интерфейсом — надёжная основа. Серверная логика, данные, инфраструктура и понятный процесс обновления продукта.",
+    tags: "NODE.JS / POSTGRESQL / DOCKER",
+    icon: "⌘",
   },
   {
     number: "03",
-    title: "Сложные интеграции",
-    text: "Связываю авторизацию, платежи, API, ботов и внешние сервисы в один понятный пользовательский сценарий.",
-    meta: "API / AUTH / PAYMENTS",
+    title: "Сервисы, которые",
+    accent: "работают вместе.",
+    description:
+      "Соединяю API, авторизацию, платежи и ботов в цельный пользовательский путь. Сложность остаётся внутри, удобство — снаружи.",
+    tags: "API / PAYMENTS / AUTOMATION",
+    icon: "↔",
   },
 ];
-
-function ProjectArrow() {
+function Arrow({ diagonal = true }: { diagonal?: boolean }) {
   return (
-    <span className="project-arrow" aria-hidden="true">
-      ↗
-    </span>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={diagonal ? "arrow-icon" : "arrow-icon arrow-icon--down"}
+    >
+      <path
+        d="M5 19 19 5M5 5h14v14"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
-
-export default function Home() {
-  const heroRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    const onPointerMove = (event: PointerEvent) => {
-      root.style.setProperty("--pointer-x", `${event.clientX}px`);
-      root.style.setProperty("--pointer-y", `${event.clientY}px`);
-    };
-
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-
-    const items = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]"),
+function ProjectVisual({ id }: { id: string }) {
+  if (id === "nova")
+    return (
+      <>
+        <Image
+          className="nova-image"
+          src={`${basePath}/projects/nova.webp`}
+          alt="Вечерний фасад жилого дома Nova Prestige"
+          fill
+          sizes="(max-width: 760px) 100vw, 90vw"
+          unoptimized
+        />
+        <div className="nova-shade" />
+        <div className="visual-top">
+          <span className="nova-logo">
+            NOVA<span>PRESTIGE</span>
+          </span>
+          <span className="visual-pill">БИШКЕК, КЫРГЫЗСТАН</span>
+        </div>
+        <div className="nova-title">
+          Искусство
+          <br />
+          <em>жить красиво.</em>
+          <span>ПРИВАТНЫЙ ДОМ. ВСЕГО 56 КВАРТИР.</span>
+        </div>
+        <div className="nova-bottom">
+          <span>АРХИТЕКТУРА ВАШЕЙ ЖИЗНИ</span>
+          <span>novaprestige.ru ↗</span>
+        </div>
+      </>
     );
-
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      items.forEach((item) => item.classList.add("is-visible"));
-      return () => window.removeEventListener("pointermove", onPointerMove);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+  if (id === "roxy")
+    return (
+      <>
+        <div className="visual-top">
+          <span className="roxy-logo">
+            roxy<span>boost</span>
+            <i>®</i>
+          </span>
+          <span className="visual-pill">СВОБОДА БЕЗ ГРАНИЦ</span>
+        </div>
+        <div className="roxy-orbit" aria-hidden="true" />
+        <div className="roxy-title" aria-hidden="true">
+          BEYOND
+          <br />
+          <span>LIMITS.</span>
+        </div>
+        <Image
+          className="roxy-image"
+          src={`${basePath}/projects/roxy.webp`}
+          alt="Космонавт — визуальный образ Roxy Boost"
+          width={700}
+          height={700}
+          sizes="(max-width: 760px) 80vw, 45vw"
+          unoptimized
+        />
+        <div className="connection-badge">
+          <span className="status-dot" /> СОЕДИНЕНИЕ ЗАЩИЩЕНО <span>↗</span>
+        </div>
+      </>
     );
-
-    items.forEach((item) => observer.observe(item));
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
-    };
-  }, []);
-
-  const handleTilt = (event: ReactPointerEvent<HTMLAnchorElement>) => {
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-
-    const card = event.currentTarget;
-    const bounds = card.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-
-    card.style.setProperty("--tilt-x", `${y * -3.5}deg`);
-    card.style.setProperty("--tilt-y", `${x * 4.5}deg`);
-    card.style.setProperty("--glow-x", `${(x + 0.5) * 100}%`);
-    card.style.setProperty("--glow-y", `${(y + 0.5) * 100}%`);
-  };
-
-  const resetTilt = (event: ReactPointerEvent<HTMLAnchorElement>) => {
-    event.currentTarget.style.setProperty("--tilt-x", "0deg");
-    event.currentTarget.style.setProperty("--tilt-y", "0deg");
-  };
-
+  if (id === "montage")
+    return (
+      <>
+        <div className="visual-top">
+          <span className="montage-logo">
+            danek<span>montage®</span>
+          </span>
+          <span className="visual-pill">CUT. CREATE. REPEAT.</span>
+        </div>
+        <div className="montage-type" aria-hidden="true">
+          <span>MAKE IT</span>
+          <span>
+            <i>MOVE</i>
+            <b>↗</b>
+          </span>
+        </div>
+        <div className="montage-bottom">
+          <span>
+            <i /> REC
+          </span>
+          <span>КАЖДЫЙ КАДР ИМЕЕТ ЗНАЧЕНИЕ</span>
+          <span>00:00:24</span>
+        </div>
+      </>
+    );
   return (
-    <main className="portfolio">
-      <div className="ambient-grid" aria-hidden="true" />
-      <div className="cursor-light" aria-hidden="true" />
-
+    <>
+      <Image
+        className="ksusha-image"
+        src={`${basePath}/projects/ksusha.webp`}
+        alt="Фотография из проекта Hey Ksusha"
+        fill
+        sizes="(max-width: 760px) 100vw, 45vw"
+        unoptimized
+      />
+      <div className="ksusha-shade" />
+      <div className="visual-top">
+        <span className="ksusha-logo">hey, ksusha</span>
+        <span className="visual-pill">ОНЛАЙН-ИНТЕНСИВ</span>
+      </div>
+      <div className="ksusha-title">
+        Начинается
+        <br />
+        <em>с тебя.</em>
+      </div>
+      <div className="ksusha-bottom">
+        <span>ЗНАКОМСТВА. ОБЩЕНИЕ. ТЫ.</span>
+        <span>✳</span>
+      </div>
+    </>
+  );
+}
+export default function Home() {
+  return (
+    <>
+      <PortfolioMotion />
+      <a className="skip-link" href="#work">
+        Перейти к проектам
+      </a>
+      <div className="scroll-progress" aria-hidden="true" />
+      <div className="pointer-aura" aria-hidden="true" />
+      <div className="project-cursor" aria-hidden="true">
+        СМОТРЕТЬ
+        <Arrow />
+      </div>
       <header className="site-header">
-        <a className="monogram" href="#top" aria-label="Наверх">
-          D<span>/</span>W
+        <a className="wordmark" href="#top" aria-label="dwertyfa — наверх">
+          dwertyfa
+          <span className="brand-star" aria-hidden="true">
+            ✳
+          </span>
         </a>
         <nav className="site-nav" aria-label="Основная навигация">
-          <a href="#work">Работы</a>
-          <a href="#expertise">Экспертиза</a>
+          <a href="#work">
+            Проекты <span>04</span>
+          </a>
+          <a href="#about">Подход</a>
           <a href="#contact">Контакт</a>
         </nav>
-        <div className="availability">
-          <span aria-hidden="true" />
-          открыт к проектам
-        </div>
+        <a
+          className="header-contact"
+          href={telegram}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="status-dot" /> ОБСУДИМ ПРОЕКТ <Arrow />
+        </a>
       </header>
-
-      <section className="hero" id="top" ref={heroRef}>
-        <div className="hero-copy">
-          <div className="hero-kicker">
-            <span>FULL-STACK DEVELOPER</span>
-            <span>КРАСНОЯРСК / REMOTE</span>
-          </div>
-
-          <h1 aria-label="Проектирую цифровые системы">
-            <span className="hero-line hero-line--one">Проектирую</span>
-            <span className="hero-line hero-line--two">
-              цифровые <i>системы</i>
+      <main>
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-topline">
+            <span>
+              <span className="status-dot" /> FULL-STACK DEVELOPER
             </span>
-          </h1>
-
-          <div className="hero-bottom">
-            <p>
-              Разрабатываю продукты целиком — от инфраструктуры и серверной
-              логики до интерфейса, который хочется исследовать.
-            </p>
+            <span>
+              КРАСНОЯРСК <i>↔</i> ВЕСЬ МИР
+            </span>
+          </div>
+          <div className="hero-scene">
+            <DeveloperScene />
+            <span className="scene-label">FORM FOLLOWS CURIOSITY — 001</span>
+          </div>
+          <div className="hero-content">
+            <h1 id="hero-title">
+              <span className="hero-line">
+                <span>Код. Форма.</span>
+              </span>
+              <span className="hero-line">
+                <span className="hero-accent">
+                  Впечатление<span className="hero-period">.</span>
+                </span>
+              </span>
+            </h1>
+            <div className="hero-description">
+              <span className="small-cross" aria-hidden="true">
+                +
+              </span>
+              <p>
+                Превращаю идеи в цифровой опыт.
+                <br />
+                От первой концепции до работающего продукта —
+                <br className="desktop-break" /> с вниманием к тому, что вы
+                видите и чувствуете.
+              </p>
+            </div>
             <div className="hero-actions">
-              <a className="button button--primary" href="#work">
-                Смотреть проекты
-                <span aria-hidden="true">↓</span>
+              <a href="#work" className="button button--lime" data-magnetic>
+                Смотреть проекты <Arrow diagonal={false} />
               </a>
-              <div className="hero-socials">
-                <a
-                  className="text-link"
-                  href="https://github.com/RoxyBoost"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  GitHub <span aria-hidden="true">↗</span>
-                </a>
-                <a
-                  className="text-link"
-                  href="https://t.me/dwertyfa"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Telegram <span aria-hidden="true">↗</span>
-                </a>
-              </div>
+              <a
+                href={telegram}
+                target="_blank"
+                rel="noreferrer"
+                className="hero-text-link"
+              >
+                Есть идея?{" "}
+                <span>
+                  Напишите мне <Arrow />
+                </span>
+              </a>
             </div>
           </div>
-        </div>
-
-        <aside className="hero-visual" aria-label="Интерактивная 3D-система">
-          <DeveloperScene variant="hero" />
-          <div className="scene-chrome scene-chrome--top">
-            <span>REALTIME OBJECT</span>
-            <strong>
-              <i aria-hidden="true" />
-              ONLINE
-            </strong>
-          </div>
-          <div className="scene-chrome scene-chrome--left" aria-hidden="true">
-            <span>01</span>
-            <span>02</span>
-            <span>03</span>
-          </div>
-          <div className="scene-chrome scene-chrome--bottom">
-            <div>
-              <span>CORE</span>
-              <strong>FULL-STACK</strong>
-            </div>
-            <div>
-              <span>INPUT</span>
-              <strong>POINTER / LIVE</strong>
-            </div>
-          </div>
-          <div className="scene-hint">ДВИГАЙТЕ КУРСОРОМ</div>
-        </aside>
-
-        <div className="scroll-note" aria-hidden="true">
-          <span />
-          SCROLL TO EXPLORE
-        </div>
-      </section>
-
-      <div className="stack-marquee" aria-label={`Технологии: ${stack.join(", ")}`}>
-        <div className="marquee-track" aria-hidden="true">
-          {[...stack, ...stack, ...stack, ...stack].map((item, index) => (
-            <span key={`${item}-${index}`}>
-              {item}
-              <i>✦</i>
+          <div className="hero-bottom">
+            <a href="#work" className="scroll-cue">
+              <span className="scroll-cue-line" /> ЛИСТАЙТЕ, ДАЛЬШЕ ИНТЕРЕСНЕЕ
+            </a>
+            <span className="hero-coordinate">
+              DESIGN × CODE × A LITTLE MAGIC
             </span>
-          ))}
-        </div>
-      </div>
-
-      <section className="statement section-pad">
-        <div className="section-label" data-reveal>
-          <span>00</span>
-          ОБО МНЕ
-        </div>
-        <div className="statement-grid">
-          <h2 data-reveal>
-            Не просто пишу код.
-            <br />
-            <em>Собираю продукт.</em>
-          </h2>
-          <div className="statement-copy" data-reveal>
-            <p>
-              Мне важно видеть всю систему: как пользователь встречает продукт,
-              что происходит за интерфейсом и насколько спокойно он живёт после
-              релиза.
-            </p>
-            <p className="statement-note">
-              Архитектура · разработка · запуск · развитие
-            </p>
+            <span className="hero-index">© 2026</span>
+          </div>
+        </section>
+        <div
+          className="marquee"
+          aria-label="Дизайн, разработка, анимация, инфраструктура"
+        >
+          <div className="marquee-track" aria-hidden="true">
+            {[0, 1, 2, 3].map((index) => (
+              <span className="marquee-group" key={index}>
+                CREATIVE DEVELOPMENT <i>✳</i> THOUGHTFUL DESIGN <i>✳</i>{" "}
+                DIGITAL EXPERIENCES <i>✳</i>{" "}
+              </span>
+            ))}
           </div>
         </div>
-      </section>
-
-      <section className="work section-pad" id="work">
-        <div className="section-heading" data-reveal>
-          <div className="section-label">
-            <span>01</span>
-            ИЗБРАННЫЕ РАБОТЫ
+        <section
+          className="work section-wrap"
+          id="work"
+          aria-labelledby="work-title"
+        >
+          <div className="section-eyebrow" data-reveal>
+            <span>[ 01 — ИЗБРАННЫЕ ПРОЕКТЫ ]</span>
+            <span>НЕ ВСЁ. ТОЛЬКО САМОЕ ИНТЕРЕСНОЕ.</span>
           </div>
-          <p>
-            Это лишь небольшая часть моих проектов. Три разных масштаба — один
-            внимательный подход.
-          </p>
-        </div>
-
-        <div className="project-grid">
-          <div className="project-shell project-shell--wide" data-reveal>
-            <a
-              className="project-card project-card--roxy"
-              href="https://roxyvpn.ru/"
-              target="_blank"
-              rel="noreferrer"
-              onPointerMove={handleTilt}
-              onPointerLeave={resetTilt}
-            >
-              <div className="card-glow" aria-hidden="true" />
-              <div className="project-topline">
-                <span>01 / PRODUCT & INFRASTRUCTURE</span>
-                <ProjectArrow />
-              </div>
-              <div className="project-art roxy-art" aria-hidden="true">
-                <div className="roxy-panel">
-                  <div className="roxy-panel-head">
-                    <span>SECURE TUNNEL</span>
-                    <i />
-                  </div>
-                  <div className="roxy-map">
-                    <span className="map-line map-line--one" />
-                    <span className="map-line map-line--two" />
-                    <i className="map-node map-node--one" />
-                    <i className="map-node map-node--two" />
-                    <i className="map-node map-node--three" />
-                    <b>10 ms</b>
-                  </div>
-                  <div className="roxy-status">
-                    <span>GERMANY / FRA</span>
-                    <strong>CONNECTED</strong>
-                  </div>
-                </div>
-              </div>
-              <div className="project-copy">
-                <div>
-                  <p className="project-role">END-TO-END РАЗРАБОТКА</p>
-                  <h3>Roxy Boost</h3>
-                </div>
-                <p>
-                  VPN-продукт, где я отвечал за весь технологический контур:
-                  инфраструктуру, приложение, backend и пользовательский сайт.
-                </p>
-              </div>
-              <div className="tag-row">
-                <span>Infrastructure</span>
-                <span>Backend</span>
-                <span>Web app</span>
-                <span>Product</span>
-              </div>
-            </a>
-          </div>
-
-          <div className="project-shell" data-reveal>
-            <a
-              className="project-card project-card--montage"
-              href="https://fazedanek-hub.github.io/danekmontage/"
-              target="_blank"
-              rel="noreferrer"
-              onPointerMove={handleTilt}
-              onPointerLeave={resetTilt}
-            >
-              <div className="card-glow" aria-hidden="true" />
-              <div className="project-topline">
-                <span>02 / CREATIVE DEVELOPMENT</span>
-                <ProjectArrow />
-              </div>
-              <div className="project-art montage-art" aria-hidden="true">
-                <div className="film-word">MOTION</div>
-                <div className="film-frame film-frame--one">
-                  <span>PLAY</span>
-                </div>
-                <div className="film-frame film-frame--two" />
-                <div className="film-timeline">
-                  <i />
-                  <span />
-                  <b />
-                </div>
-              </div>
-              <div className="project-copy">
-                <div>
-                  <p className="project-role">САЙТ-ПОРТФОЛИО</p>
-                  <h3>danek montage</h3>
-                </div>
-                <p>
-                  Динамичная витрина видеомонтажа для блогеров и брендов с
-                  акцентом на темп, движение и сильную подачу работ.
-                </p>
-              </div>
-              <div className="tag-row">
-                <span>React</span>
-                <span>Motion UI</span>
-                <span>Responsive</span>
-              </div>
-            </a>
-          </div>
-
-          <div className="project-shell" data-reveal>
-            <a
-              className="project-card project-card--ksusha"
-              href="https://heyksusha.ru/intensive"
-              target="_blank"
-              rel="noreferrer"
-              onPointerMove={handleTilt}
-              onPointerLeave={resetTilt}
-            >
-              <div className="card-glow" aria-hidden="true" />
-              <div className="project-topline">
-                <span>03 / LANDING & COMMERCE</span>
-                <ProjectArrow />
-              </div>
-              <div className="project-art ksusha-art" aria-hidden="true">
-                <span className="ksusha-star">✦</span>
-                <div className="ksusha-arch">
-                  <span>HEY</span>
-                  <strong>Ksusha</strong>
-                  <i>INTENSIVE</i>
-                </div>
-                <span className="ksusha-caption">01 — 06</span>
-              </div>
-              <div className="project-copy">
-                <div>
-                  <p className="project-role">ПРОМО-САЙТ</p>
-                  <h3>Hey Ksusha</h3>
-                </div>
-                <p>
-                  Эмоциональный лендинг интенсива: премиальная визуальная
-                  система, сценарий продажи, форма и платёжная интеграция.
-                </p>
-              </div>
-              <div className="tag-row">
-                <span>Art direction</span>
-                <span>Landing</span>
-                <span>Payments</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section className="expertise section-pad" id="expertise">
-        <div className="section-heading section-heading--light" data-reveal>
-          <div className="section-label">
-            <span>02</span>
-            ЧТО Я ДЕЛАЮ
-          </div>
-          <p>Разбираюсь в деталях, не теряя из виду целое.</p>
-        </div>
-
-        <div className="expertise-list">
-          {expertise.map((item) => (
-            <article className="expertise-row" key={item.number} data-reveal>
-              <span className="expertise-number">{item.number}</span>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-              <span className="expertise-meta">{item.meta}</span>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="depth section-pad">
-        <div className="depth-copy" data-reveal>
-          <div className="section-label section-label--light">
-            <span>03</span>
-            ENGINEERING IN DEPTH
-          </div>
-          <h2>
-            Вижу продукт
-            <br />
-            <em>в объёме.</em>
-          </h2>
-          <p>
-            Интерфейс — только видимая плоскость. За ним живут сервисы, данные,
-            сеть и инфраструктура. Я проектирую их как связанную систему.
-          </p>
-          <div className="depth-metrics">
-            <div>
-              <strong>01</strong>
-              <span>единая архитектура</span>
-            </div>
-            <div>
-              <strong>∞</strong>
-              <span>пространство роста</span>
-            </div>
-          </div>
-        </div>
-        <div className="depth-visual" data-reveal>
-          <DeveloperScene variant="systems" />
-          <div className="depth-frame" aria-hidden="true">
-            <span className="frame-corner frame-corner--tl" />
-            <span className="frame-corner frame-corner--tr" />
-            <span className="frame-corner frame-corner--bl" />
-            <span className="frame-corner frame-corner--br" />
-          </div>
-          <div className="depth-status">
-            <span>ARCHITECTURE MAP</span>
-            <span>18 NODES / ACTIVE</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="process section-pad">
-        <div className="section-label" data-reveal>
-          <span>04</span>
-          КАК Я РАБОТАЮ
-        </div>
-        <div className="process-grid">
-          <div className="process-intro" data-reveal>
-            <h2>
-              Из хаоса
-              <br />в <em>систему.</em>
+          <div className="section-intro" data-reveal>
+            <h2 id="work-title">
+              Меньше слов.
+              <br />
+              <span className="muted">Больше дела.</span>
+              <sup>(04)</sup>
             </h2>
             <p>
-              Прозрачный процесс помогает двигаться быстро и не терять качество
-              на поворотах.
+              Разные задачи. Разный характер.
+              <br />
+              Один подход — доводить до результата.
             </p>
+          </div>
+          <div className="projects-grid">
+            {projects.map((project) => (
+              <article
+                className={`project project--${project.id}`}
+                key={project.id}
+                data-reveal
+              >
+                <a
+                  className={`project-visual project-visual--${project.id}`}
+                  href={project.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Открыть проект ${project.name} в новой вкладке`}
+                  data-project
+                >
+                  <div className="project-visual-inner">
+                    <ProjectVisual id={project.id} />
+                  </div>
+                  <span className="project-open">
+                    <Arrow />
+                  </span>
+                </a>
+                <div className="project-details">
+                  <div>
+                    <span className="project-category">
+                      {project.number} / {project.category}
+                    </span>
+                    <h3>
+                      <a href={project.href} target="_blank" rel="noreferrer">
+                        {project.name}
+                        <Arrow />
+                      </a>
+                    </h3>
+                  </div>
+                  <p>{project.description}</p>
+                </div>
+                <div className="project-tags">
+                  {project.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="work-outro" data-reveal>
+            <span>Люблю задачи, которых ещё не было.</span>
+            <a href={telegram} target="_blank" rel="noreferrer">
+              Ваш проект может быть следующим <Arrow />
+            </a>
+          </div>
+        </section>
+        <section
+          className="about section-wrap"
+          id="about"
+          aria-labelledby="about-title"
+        >
+          <div className="section-eyebrow" data-reveal>
+            <span>[ 02 — ЗА ИНТЕРФЕЙСОМ ]</span>
+            <span>ЧУТЬ БОЛЬШЕ ОБО МНЕ</span>
+          </div>
+          <div className="about-grid">
+            <div className="about-side" data-reveal>
+              <span className="about-asterisk" aria-hidden="true">
+                ✳
+              </span>
+              <span>
+                Думаю как дизайнер.
+                <br />
+                Собираю как инженер.
+              </span>
+            </div>
+            <div className="about-copy">
+              <h2 id="about-title" data-reveal>
+                Хороший продукт
+                <br />
+                не заканчивается
+                <br />
+                на <em>красивом экране.</em>
+              </h2>
+              <div className="about-body" data-reveal>
+                <p>
+                  Я dwertyfa, full-stack разработчик. Мне интересно всё, что
+                  превращает идею в живой продукт: как он выглядит, как работает
+                  и что ощущает человек по ту сторону экрана.
+                </p>
+                <p>
+                  Поэтому я погружаюсь целиком — от архитектуры и серверов до
+                  типографики, плавности анимаций и той самой кнопки.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="services">
+            {services.map((service) => (
+              <article className="service" key={service.number} data-reveal>
+                <span className="service-number">/ {service.number}</span>
+                <span className="service-icon" aria-hidden="true">
+                  {service.icon}
+                </span>
+                <h3>
+                  {service.title}
+                  <br />
+                  <span>{service.accent}</span>
+                </h3>
+                <p>{service.description}</p>
+                <span className="service-stack">{service.tags}</span>
+              </article>
+            ))}
+          </div>
+          <div className="tech-line" data-reveal>
+            <span>ИНСТРУМЕНТЫ МЕНЯЮТСЯ. ПОДХОД ОСТАЁТСЯ.</span>
+            <div>
+              {[
+                "React",
+                "TypeScript",
+                "Next.js",
+                "Node.js",
+                "PostgreSQL",
+                "Docker",
+                "Linux",
+                "Nginx",
+              ].map((tech) => (
+                <span key={tech}>{tech}</span>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section
+          className="process section-wrap"
+          id="process"
+          aria-labelledby="process-title"
+        >
+          <div className="process-heading" data-reveal>
+            <div className="section-eyebrow">
+              <span>[ 03 — ОТ ИДЕИ ДО ЗАПУСКА ]</span>
+            </div>
+            <h2 id="process-title">
+              Сложные задачи.
+              <br />
+              <em>Понятный процесс.</em>
+            </h2>
+            <p>
+              На каждом этапе вы понимаете,
+              <br />
+              где мы находимся и что будет дальше.
+            </p>
+            <span className="process-arrow" aria-hidden="true">
+              ↘
+            </span>
           </div>
           <ol className="process-steps">
             {[
-              ["Погружение", "Задача, контекст, ограничения"],
-              ["Архитектура", "Сценарии, данные, технологии"],
-              ["Разработка", "Итерации и рабочий результат"],
-              ["Запуск", "Деплой, проверка, развитие"],
-            ].map(([title, text], index) => (
+              [
+                "Сначала — суть",
+                "Обсуждаем задачу, аудиторию и ограничения. Задаю вопросы, чтобы найти решение, которое нужно именно вам.",
+              ],
+              [
+                "Затем — система",
+                "Собираю структуру, пользовательские сценарии и визуальное направление. У каждой детали появляется своё место.",
+              ],
+              [
+                "Дальше — в дело",
+                "Разрабатываю итерациями и показываю рабочий результат. Проверяю адаптив, взаимодействия и интеграции.",
+              ],
+              [
+                "И наконец — запуск",
+                "Настраиваю публикацию, проверяю продукт в реальных условиях и помогаю двигаться дальше.",
+              ],
+            ].map(([title, description], index) => (
               <li key={title} data-reveal>
-                <span>0{index + 1}</span>
+                <span className="step-number">0{index + 1}</span>
                 <div>
-                  <strong>{title}</strong>
-                  <p>{text}</p>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
                 </div>
+                <span className="step-mark" aria-hidden="true">
+                  +
+                </span>
               </li>
             ))}
           </ol>
+        </section>
+      </main>
+      <footer className="contact section-wrap" id="contact">
+        <div className="contact-top" data-reveal>
+          <span className="section-eyebrow">[ 04 — ВАША СЛЕДУЮЩАЯ ИДЕЯ ]</span>
+          <span className="contact-status">
+            <span className="status-dot" /> ОТКРЫТ К НОВЫМ ПРОЕКТАМ
+          </span>
         </div>
-      </section>
-
-      <footer className="site-footer section-pad" id="contact">
-        <div className="footer-orbit" aria-hidden="true">
-          <span>LET&apos;S BUILD · LET&apos;S BUILD · </span>
-        </div>
-        <div className="footer-kicker" data-reveal>
-          ЕСТЬ ИДЕЯ ИЛИ ЗАДАЧА?
-        </div>
-        <h2 data-reveal>
-          Давайте сделаем
-          <br />
-          <em>что-то сильное.</em>
-        </h2>
-        <div className="footer-links" data-reveal>
+        <a
+          className="contact-title"
+          href={telegram}
+          target="_blank"
+          rel="noreferrer"
+          data-reveal
+        >
+          <span>
+            Сделаем
+            <br />
+            <em>что-то сильное.</em>
+          </span>
+          <span className="contact-arrow" data-magnetic>
+            <Arrow />
+          </span>
+        </a>
+        <div className="contact-bottom" data-reveal>
+          <p>
+            Расскажите, что у вас на уме.
+            <br />
+            Начнём с простого «привет».
+          </p>
           <a
-            className="footer-link"
-            href="https://github.com/RoxyBoost"
+            className="contact-telegram"
+            href={telegram}
             target="_blank"
             rel="noreferrer"
           >
-            Открыть GitHub
-            <span aria-hidden="true">↗</span>
-          </a>
-          <a
-            className="footer-link"
-            href="https://t.me/dwertyfa"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Написать в Telegram
-            <span aria-hidden="true">↗</span>
+            @dwertyfa <Arrow />
           </a>
         </div>
-        <div className="footer-bottom">
-          <span>© 2026 DWERTYFA</span>
-          <span>DESIGN × CODE × SYSTEMS</span>
-          <a href="#top">НАВЕРХ ↑</a>
+        <div className="footer-line">
+          <a className="wordmark" href="#top">
+            dwertyfa
+            <span className="brand-star" aria-hidden="true">
+              ✳
+            </span>
+          </a>
+          <span>СДЕЛАНО С ВНИМАНИЕМ К ДЕТАЛЯМ © 2026</span>
+          <div>
+            <a href={github} target="_blank" rel="noreferrer">
+              GitHub <Arrow />
+            </a>
+            <a href="#top">Наверх ↑</a>
+          </div>
         </div>
       </footer>
-    </main>
+    </>
   );
 }
