@@ -1,90 +1,20 @@
-import Image from "next/image";
 import DeveloperScene from "./DeveloperScene";
 import PortfolioMotion from "./PortfolioMotion";
+import ProjectGallery from "./ProjectGallery";
 
-const basePath = process.env.BASE_PATH ?? "";
 const telegram = "https://t.me/dwertyfa";
 const github = "https://github.com/RoxyBoost";
-const projects = [
-  {
-    id: "nova",
-    number: "01",
-    name: "Nova Prestige",
-    category: "НЕДВИЖИМОСТЬ · ПРОМО-САЙТ",
-    href: "https://novaprestige.ru/",
-    description:
-      "Цифровое пространство для приватного жилого дома в центре Бишкека. Архитектура, атмосфера и внимание к каждой детали.",
-    tags: ["Веб-разработка", "Адаптивный интерфейс", "Анимации"],
-  },
-  {
-    id: "roxy",
-    number: "02",
-    name: "Roxy Boost",
-    category: "VPN-СЕРВИС · FULL-STACK",
-    href: "https://roxyvpn.ru/",
-    description:
-      "От серверной инфраструктуры до последнего экрана. VPN-продукт, который я разрабатывал как единую систему.",
-    tags: ["Инфраструктура", "Backend", "Web app"],
-  },
-  {
-    id: "montage",
-    number: "03",
-    name: "danek montage",
-    category: "КРЕАТИВНОЕ ПОРТФОЛИО",
-    href: "https://fazedanek-hub.github.io/danekmontage/",
-    description:
-      "Работы, которые говорят движением. Динамичное портфолио видеомонтажёра для блогеров и брендов.",
-    tags: ["React", "Motion UI", "Веб-разработка"],
-  },
-  {
-    id: "ksusha",
-    number: "04",
-    name: "Hey Ksusha",
-    category: "ОБРАЗОВАНИЕ · ЛЕНДИНГ",
-    href: "https://heyksusha.ru/intensive",
-    description:
-      "Выразительный сайт интенсива с продуманным сценарием: от первого впечатления до записи и оплаты.",
-    tags: ["Арт-дирекшн", "Лендинг", "Платежи"],
-  },
-];
-const services = [
-  {
-    number: "01",
-    title: "Интерфейс, который",
-    accent: "чувствуется.",
-    description:
-      "Разрабатываю сайты и приложения с характером. Продумываю логику, адаптив и движение — чтобы каждая деталь работала на впечатление.",
-    tags: "REACT / NEXT.JS / TYPESCRIPT",
-    icon: "↗",
-  },
-  {
-    number: "02",
-    title: "Система, на которую",
-    accent: "можно положиться.",
-    description:
-      "За красивым интерфейсом — надёжная основа. Серверная логика, данные, инфраструктура и понятный процесс обновления продукта.",
-    tags: "NODE.JS / POSTGRESQL / DOCKER",
-    icon: "⌘",
-  },
-  {
-    number: "03",
-    title: "Сервисы, которые",
-    accent: "работают вместе.",
-    description:
-      "Соединяю API, авторизацию, платежи и ботов в цельный пользовательский путь. Сложность остаётся внутри, удобство — снаружи.",
-    tags: "API / PAYMENTS / AUTOMATION",
-    icon: "↔",
-  },
-];
-function Arrow({ diagonal = true }: { diagonal?: boolean }) {
+const basePath = process.env.BASE_PATH ?? "";
+
+function Arrow({ down = false }: { down?: boolean }) {
   return (
     <svg
-      width="24"
-      height="24"
+      className={`arrow${down ? " arrow--down" : ""}`}
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
-      className={diagonal ? "arrow-icon" : "arrow-icon arrow-icon--down"}
     >
       <path
         d="M5 19 19 5M5 5h14v14"
@@ -96,490 +26,299 @@ function Arrow({ diagonal = true }: { diagonal?: boolean }) {
     </svg>
   );
 }
-function ProjectVisual({ id }: { id: string }) {
-  if (id === "nova")
-    return (
-      <>
-        <Image
-          className="nova-image"
-          src={`${basePath}/projects/nova.webp`}
-          alt="Вечерний фасад жилого дома Nova Prestige"
-          fill
-          sizes="(max-width: 760px) 100vw, 90vw"
-          unoptimized
-        />
-        <div className="nova-shade" />
-        <div className="visual-top">
-          <span className="nova-logo">
-            NOVA<span>PRESTIGE</span>
-          </span>
-          <span className="visual-pill">БИШКЕК, КЫРГЫЗСТАН</span>
-        </div>
-        <div className="nova-title">
-          Искусство
-          <br />
-          <em>жить красиво.</em>
-          <span>ПРИВАТНЫЙ ДОМ. ВСЕГО 56 КВАРТИР.</span>
-        </div>
-        <div className="nova-bottom">
-          <span>АРХИТЕКТУРА ВАШЕЙ ЖИЗНИ</span>
-          <span>novaprestige.ru ↗</span>
-        </div>
-      </>
-    );
-  if (id === "roxy")
-    return (
-      <>
-        <div className="visual-top">
-          <span className="roxy-logo">
-            roxy<span>boost</span>
-            <i>®</i>
-          </span>
-          <span className="visual-pill">СВОБОДА БЕЗ ГРАНИЦ</span>
-        </div>
-        <div className="roxy-orbit" aria-hidden="true" />
-        <div className="roxy-title" aria-hidden="true">
-          BEYOND
-          <br />
-          <span>LIMITS.</span>
-        </div>
-        <Image
-          className="roxy-image"
-          src={`${basePath}/projects/roxy.webp`}
-          alt="Космонавт — визуальный образ Roxy Boost"
-          width={700}
-          height={700}
-          sizes="(max-width: 760px) 80vw, 45vw"
-          unoptimized
-        />
-        <div className="connection-badge">
-          <span className="status-dot" /> СОЕДИНЕНИЕ ЗАЩИЩЕНО <span>↗</span>
-        </div>
-      </>
-    );
-  if (id === "montage")
-    return (
-      <>
-        <div className="visual-top">
-          <span className="montage-logo">
-            danek<span>montage®</span>
-          </span>
-          <span className="visual-pill">CUT. CREATE. REPEAT.</span>
-        </div>
-        <div className="montage-type" aria-hidden="true">
-          <span>MAKE IT</span>
-          <span>
-            <i>MOVE</i>
-            <b>↗</b>
-          </span>
-        </div>
-        <div className="montage-bottom">
-          <span>
-            <i /> REC
-          </span>
-          <span>КАЖДЫЙ КАДР ИМЕЕТ ЗНАЧЕНИЕ</span>
-          <span>00:00:24</span>
-        </div>
-      </>
-    );
-  return (
-    <>
-      <Image
-        className="ksusha-image"
-        src={`${basePath}/projects/ksusha.webp`}
-        alt="Фотография из проекта Hey Ksusha"
-        fill
-        sizes="(max-width: 760px) 100vw, 45vw"
-        unoptimized
-      />
-      <div className="ksusha-shade" />
-      <div className="visual-top">
-        <span className="ksusha-logo">hey, ksusha</span>
-        <span className="visual-pill">ОНЛАЙН-ИНТЕНСИВ</span>
-      </div>
-      <div className="ksusha-title">
-        Начинается
-        <br />
-        <em>с тебя.</em>
-      </div>
-      <div className="ksusha-bottom">
-        <span>ЗНАКОМСТВА. ОБЩЕНИЕ. ТЫ.</span>
-        <span>✳</span>
-      </div>
-    </>
-  );
-}
 export default function Home() {
   return (
     <>
       <PortfolioMotion />
       <a className="skip-link" href="#work">
-        Перейти к проектам
+        К проектам
       </a>
-      <div className="scroll-progress" aria-hidden="true" />
-      <div className="pointer-aura" aria-hidden="true" />
-      <div className="project-cursor" aria-hidden="true">
-        СМОТРЕТЬ
-        <Arrow />
-      </div>
+      <div className="reading-progress" aria-hidden="true" />
+      <div className="cosmic-dust" aria-hidden="true" />
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="dwertyfa — наверх">
-          dwertyfa
-          <span className="brand-star" aria-hidden="true">
-            ✳
+          <span className="brand-symbol" aria-hidden="true">
+            d.
           </span>
+          dwertyfa<span className="wordmark-reg">®</span>
         </a>
-        <nav className="site-nav" aria-label="Основная навигация">
+        <nav aria-label="Основная навигация">
           <a href="#work">
             Проекты <span>04</span>
           </a>
-          <a href="#about">Подход</a>
-          <a href="#contact">Контакт</a>
+          <a href="#about">Обо мне</a>
+          <a href="#contact">
+            Контакт <Arrow />
+          </a>
         </nav>
         <a
-          className="header-contact"
+          className="availability"
           href={telegram}
           target="_blank"
           rel="noreferrer"
         >
-          <span className="status-dot" /> ОБСУДИМ ПРОЕКТ <Arrow />
+          <i /> ОТКРЫТ К ПРОЕКТАМ
         </a>
       </header>
       <main>
-        <section className="hero" id="top" aria-labelledby="hero-title">
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-topline">
-            <span>
-              <span className="status-dot" /> FULL-STACK DEVELOPER
-            </span>
-            <span>
-              КРАСНОЯРСК <i>↔</i> ВЕСЬ МИР
-            </span>
-          </div>
+        <section
+          className="cosmos-hero"
+          id="top"
+          aria-labelledby="hero-heading"
+        >
+          <div className="hero-nebula" aria-hidden="true" />
           <div className="hero-scene">
-            <DeveloperScene />
-            <span className="scene-label">FORM FOLLOWS CURIOSITY — 001</span>
+            <DeveloperScene variant="hero" />
           </div>
-          <div className="hero-content">
-            <h1 id="hero-title">
-              <span className="hero-line">
-                <span>Код. Форма.</span>
-              </span>
-              <span className="hero-line">
-                <span className="hero-accent">
-                  Впечатление<span className="hero-period">.</span>
-                </span>
+          <div className="hero-eyebrow">
+            <span className="tiny-star" aria-hidden="true">
+              ✦
+            </span>{" "}
+            FULL-STACK DEVELOPER <span className="eyebrow-divider" /> CREATIVE
+            MIND
+          </div>
+          <div className="hero-title-wrap">
+            <span className="hero-pretitle">
+              Идеям нужно больше пространства.
+            </span>
+            <h1 id="hero-heading">
+              <span>Разработка</span>
+              <span>
+                в другом <em>измерении.</em>
               </span>
             </h1>
-            <div className="hero-description">
-              <span className="small-cross" aria-hidden="true">
-                +
-              </span>
-              <p>
-                Превращаю идеи в цифровой опыт.
-                <br />
-                От первой концепции до работающего продукта —
-                <br className="desktop-break" /> с вниманием к тому, что вы
-                видите и чувствуете.
-              </p>
-            </div>
-            <div className="hero-actions">
-              <a href="#work" className="button button--lime" data-magnetic>
-                Смотреть проекты <Arrow diagonal={false} />
-              </a>
-              <a
-                href={telegram}
-                target="_blank"
-                rel="noreferrer"
-                className="hero-text-link"
-              >
-                Есть идея?{" "}
-                <span>
-                  Напишите мне <Arrow />
-                </span>
-              </a>
-            </div>
+          </div>
+          <div className="hero-orbit-label" aria-hidden="true">
+            <span>↗</span> ЗА ПРЕДЕЛАМИ
+            <br />
+            ОБЫЧНОГО
           </div>
           <div className="hero-bottom">
-            <a href="#work" className="scroll-cue">
-              <span className="scroll-cue-line" /> ЛИСТАЙТЕ, ДАЛЬШЕ ИНТЕРЕСНЕЕ
-            </a>
-            <span className="hero-coordinate">
-              DESIGN × CODE × A LITTLE MAGIC
-            </span>
-            <span className="hero-index">© 2026</span>
-          </div>
-        </section>
-        <div
-          className="marquee"
-          aria-label="Дизайн, разработка, анимация, инфраструктура"
-        >
-          <div className="marquee-track" aria-hidden="true">
-            {[0, 1, 2, 3].map((index) => (
-              <span className="marquee-group" key={index}>
-                CREATIVE DEVELOPMENT <i>✳</i> THOUGHTFUL DESIGN <i>✳</i>{" "}
-                DIGITAL EXPERIENCES <i>✳</i>{" "}
-              </span>
-            ))}
-          </div>
-        </div>
-        <section
-          className="work section-wrap"
-          id="work"
-          aria-labelledby="work-title"
-        >
-          <div className="section-eyebrow" data-reveal>
-            <span>[ 01 — ИЗБРАННЫЕ ПРОЕКТЫ ]</span>
-            <span>НЕ ВСЁ. ТОЛЬКО САМОЕ ИНТЕРЕСНОЕ.</span>
-          </div>
-          <div className="section-intro" data-reveal>
-            <h2 id="work-title">
-              Меньше слов.
-              <br />
-              <span className="muted">Больше дела.</span>
-              <sup>(04)</sup>
-            </h2>
             <p>
-              Разные задачи. Разный характер.
-              <br />
-              Один подход — доводить до результата.
+              Я dwertyfa. Создаю сайты и цифровые продукты,
+              <br className="wide-only" /> в которых инженерия встречается с
+              воображением.
             </p>
-          </div>
-          <div className="projects-grid">
-            {projects.map((project) => (
-              <article
-                className={`project project--${project.id}`}
-                key={project.id}
-                data-reveal
-              >
-                <a
-                  className={`project-visual project-visual--${project.id}`}
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Открыть проект ${project.name} в новой вкладке`}
-                  data-project
-                >
-                  <div className="project-visual-inner">
-                    <ProjectVisual id={project.id} />
-                  </div>
-                  <span className="project-open">
-                    <Arrow />
-                  </span>
-                </a>
-                <div className="project-details">
-                  <div>
-                    <span className="project-category">
-                      {project.number} / {project.category}
-                    </span>
-                    <h3>
-                      <a href={project.href} target="_blank" rel="noreferrer">
-                        {project.name}
-                        <Arrow />
-                      </a>
-                    </h3>
-                  </div>
-                  <p>{project.description}</p>
-                </div>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="work-outro" data-reveal>
-            <span>Люблю задачи, которых ещё не было.</span>
-            <a href={telegram} target="_blank" rel="noreferrer">
-              Ваш проект может быть следующим <Arrow />
-            </a>
-          </div>
-        </section>
-        <section
-          className="about section-wrap"
-          id="about"
-          aria-labelledby="about-title"
-        >
-          <div className="section-eyebrow" data-reveal>
-            <span>[ 02 — ЗА ИНТЕРФЕЙСОМ ]</span>
-            <span>ЧУТЬ БОЛЬШЕ ОБО МНЕ</span>
-          </div>
-          <div className="about-grid">
-            <div className="about-side" data-reveal>
-              <span className="about-asterisk" aria-hidden="true">
-                ✳
-              </span>
+            <a className="pill pill--peach" href="#work" data-magnetic>
+              Войти в мою вселенную{" "}
               <span>
-                Думаю как дизайнер.
-                <br />
-                Собираю как инженер.
+                <Arrow down />
               </span>
+            </a>
+          </div>
+          <div className="hero-footnote">
+            <a href="#work">
+              <span className="scroll-orbit" aria-hidden="true">
+                ↓
+              </span>{" "}
+              ПРОКРУТИТЕ И ПОЧУВСТВУЙТЕ
+            </a>
+            <span>КРАСНОЯРСК / РАБОТАЮ ПО ВСЕМУ МИРУ</span>
+            <span>© 2026</span>
+          </div>
+        </section>
+        <div className="manifesto" data-reveal>
+          <span>ДИЗАЙН СОЗДАЁТ ЧУВСТВО.</span>
+          <span className="manifesto-star" aria-hidden="true">
+            ✦
+          </span>
+          <span>КОД ДАЁТ ЕМУ ЖИЗНЬ.</span>
+          <span className="manifesto-star" aria-hidden="true">
+            ✦
+          </span>
+        </div>
+        <ProjectGallery basePath={basePath} />
+        <section
+          className="about-section page-width"
+          id="about"
+          aria-labelledby="about-heading"
+        >
+          <div className="section-label" data-reveal>
+            <span className="label-dot" /> 02 / ЧЕЛОВЕК ЗА КОДОМ
+          </div>
+          <div className="about-intro">
+            <h2 id="about-heading" data-reveal>
+              Любопытство —<br />
+              мой <em>двигатель.</em>
+            </h2>
+            <div data-reveal>
+              <span className="about-marker" aria-hidden="true">
+                ↳
+              </span>
+              <p>
+                Мне интересно, что получится на стыке технологий и визуального
+                мышления. Поэтому я собираю продукт целиком: от серверов и
+                данных до движения последнего пикселя.
+              </p>
+              <p>
+                Красивый интерфейс, надёжная основа и ощущение, что всё на своём
+                месте.
+              </p>
             </div>
-            <div className="about-copy">
-              <h2 id="about-title" data-reveal>
-                Хороший продукт
-                <br />
-                не заканчивается
-                <br />
-                на <em>красивом экране.</em>
-              </h2>
-              <div className="about-body" data-reveal>
-                <p>
-                  Я dwertyfa, full-stack разработчик. Мне интересно всё, что
-                  превращает идею в живой продукт: как он выглядит, как работает
-                  и что ощущает человек по ту сторону экрана.
-                </p>
-                <p>
-                  Поэтому я погружаюсь целиком — от архитектуры и серверов до
-                  типографики, плавности анимаций и той самой кнопки.
-                </p>
+          </div>
+          <div className="capabilities">
+            <article className="capability" data-reveal>
+              <div className="capability-top">
+                <span>01 / ВНЕШНИЙ МИР</span>
+                <span>↗</span>
               </div>
-            </div>
-          </div>
-          <div className="services">
-            {services.map((service) => (
-              <article className="service" key={service.number} data-reveal>
-                <span className="service-number">/ {service.number}</span>
-                <span className="service-icon" aria-hidden="true">
-                  {service.icon}
-                </span>
-                <h3>
-                  {service.title}
-                  <br />
-                  <span>{service.accent}</span>
-                </h3>
-                <p>{service.description}</p>
-                <span className="service-stack">{service.tags}</span>
-              </article>
-            ))}
-          </div>
-          <div className="tech-line" data-reveal>
-            <span>ИНСТРУМЕНТЫ МЕНЯЮТСЯ. ПОДХОД ОСТАЁТСЯ.</span>
-            <div>
-              {[
-                "React",
-                "TypeScript",
-                "Next.js",
-                "Node.js",
-                "PostgreSQL",
-                "Docker",
-                "Linux",
-                "Nginx",
-              ].map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
-            </div>
+              <div className="capability-scene">
+                <DeveloperScene variant="interface" />
+              </div>
+              <h3>
+                Видеть.
+                <br />
+                <em>Чувствовать.</em>
+              </h3>
+              <p>
+                Сайты и приложения с характером. Продумываю сценарии, адаптив и
+                анимации, которые делают интерфейс живым.
+              </p>
+              <div className="capability-tags">
+                <span>React</span>
+                <span>Next.js</span>
+                <span>TypeScript</span>
+              </div>
+            </article>
+            <article className="capability" data-reveal>
+              <div className="capability-top">
+                <span>02 / ВНУТРЕННИЙ МИР</span>
+                <span>⌘</span>
+              </div>
+              <div className="capability-scene">
+                <DeveloperScene variant="systems" />
+              </div>
+              <h3>
+                Работать.
+                <br />
+                <em>Выдерживать.</em>
+              </h3>
+              <p>
+                Архитектура, серверная логика и инфраструктура. Всё, на что
+                опирается продукт, когда им начинают пользоваться.
+              </p>
+              <div className="capability-tags">
+                <span>Node.js</span>
+                <span>PostgreSQL</span>
+                <span>Docker</span>
+              </div>
+            </article>
+            <article className="capability" data-reveal>
+              <div className="capability-top">
+                <span>03 / ТОЧКИ СОПРИКОСНОВЕНИЯ</span>
+                <span>↔</span>
+              </div>
+              <div className="capability-scene">
+                <DeveloperScene variant="connections" />
+              </div>
+              <h3>
+                Соединять.
+                <br />
+                <em>Упрощать.</em>
+              </h3>
+              <p>
+                API, платежи, авторизация и боты. Связываю сервисы в понятный
+                путь, в котором сложность остаётся за кадром.
+              </p>
+              <div className="capability-tags">
+                <span>API</span>
+                <span>Payments</span>
+                <span>Automation</span>
+              </div>
+            </article>
           </div>
         </section>
         <section
-          className="process section-wrap"
-          id="process"
-          aria-labelledby="process-title"
+          className="process-section page-width"
+          aria-labelledby="process-heading"
         >
-          <div className="process-heading" data-reveal>
-            <div className="section-eyebrow">
-              <span>[ 03 — ОТ ИДЕИ ДО ЗАПУСКА ]</span>
-            </div>
-            <h2 id="process-title">
-              Сложные задачи.
+          <div className="section-label" data-reveal>
+            <span className="label-dot" /> 03 / ТРАЕКТОРИЯ ПРОЕКТА
+          </div>
+          <div className="process-intro" data-reveal>
+            <h2 id="process-heading">
+              От «а что, если»
               <br />
-              <em>Понятный процесс.</em>
+              <em>до «уже работает».</em>
             </h2>
             <p>
-              На каждом этапе вы понимаете,
+              Прозрачный процесс.
               <br />
-              где мы находимся и что будет дальше.
+              Живой результат на каждом этапе.
             </p>
-            <span className="process-arrow" aria-hidden="true">
-              ↘
-            </span>
           </div>
-          <ol className="process-steps">
+          <ol className="process-track">
             {[
               [
-                "Сначала — суть",
-                "Обсуждаем задачу, аудиторию и ограничения. Задаю вопросы, чтобы найти решение, которое нужно именно вам.",
+                "Погружение",
+                "Разбираемся в задаче, людях и контексте. Находим то, что действительно важно.",
               ],
               [
-                "Затем — система",
-                "Собираю структуру, пользовательские сценарии и визуальное направление. У каждой детали появляется своё место.",
+                "Концепция",
+                "Собираю структуру, визуальный язык и архитектуру будущего продукта.",
               ],
               [
-                "Дальше — в дело",
-                "Разрабатываю итерациями и показываю рабочий результат. Проверяю адаптив, взаимодействия и интеграции.",
+                "Разработка",
+                "Превращаю идею в работающий продукт. Показываю, проверяю, дорабатываю.",
               ],
               [
-                "И наконец — запуск",
-                "Настраиваю публикацию, проверяю продукт в реальных условиях и помогаю двигаться дальше.",
+                "Запуск",
+                "Публикую, проверяю в реальных условиях и помогаю развивать дальше.",
               ],
             ].map(([title, description], index) => (
               <li key={title} data-reveal>
-                <span className="step-number">0{index + 1}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </div>
-                <span className="step-mark" aria-hidden="true">
-                  +
+                <span className="process-point">
+                  <span>0{index + 1}</span>
+                  <i />
                 </span>
+                <h3>{title}</h3>
+                <p>{description}</p>
               </li>
             ))}
           </ol>
         </section>
       </main>
-      <footer className="contact section-wrap" id="contact">
-        <div className="contact-top" data-reveal>
-          <span className="section-eyebrow">[ 04 — ВАША СЛЕДУЮЩАЯ ИДЕЯ ]</span>
-          <span className="contact-status">
-            <span className="status-dot" /> ОТКРЫТ К НОВЫМ ПРОЕКТАМ
-          </span>
+      <footer className="contact-section" id="contact">
+        <div className="contact-portal">
+          <DeveloperScene variant="portal" />
         </div>
-        <a
-          className="contact-title"
-          href={telegram}
-          target="_blank"
-          rel="noreferrer"
-          data-reveal
-        >
-          <span>
-            Сделаем
+        <div className="contact-content page-width">
+          <div className="section-label" data-reveal>
+            <span className="label-dot" /> СЛЕДУЮЩАЯ ОРБИТА — ВАША
+          </div>
+          <h2 data-reveal>
+            Есть идея?
             <br />
-            <em>что-то сильное.</em>
-          </span>
-          <span className="contact-arrow" data-magnetic>
-            <Arrow />
-          </span>
-        </a>
-        <div className="contact-bottom" data-reveal>
-          <p>
-            Расскажите, что у вас на уме.
-            <br />
-            Начнём с простого «привет».
-          </p>
+            <em>Дадим ей форму.</em>
+          </h2>
+          <p data-reveal>Самые интересные проекты начинаются с разговора.</p>
           <a
-            className="contact-telegram"
+            className="pill pill--peach"
             href={telegram}
             target="_blank"
             rel="noreferrer"
+            data-magnetic
           >
-            @dwertyfa <Arrow />
-          </a>
-        </div>
-        <div className="footer-line">
-          <a className="wordmark" href="#top">
-            dwertyfa
-            <span className="brand-star" aria-hidden="true">
-              ✳
+            Привет, dwertyfa{" "}
+            <span>
+              <Arrow />
             </span>
           </a>
-          <span>СДЕЛАНО С ВНИМАНИЕМ К ДЕТАЛЯМ © 2026</span>
-          <div>
+          <div className="contact-direct" data-reveal>
+            <a href={telegram} target="_blank" rel="noreferrer">
+              Telegram <Arrow />
+            </a>
             <a href={github} target="_blank" rel="noreferrer">
               GitHub <Arrow />
             </a>
-            <a href="#top">Наверх ↑</a>
           </div>
+        </div>
+        <div className="footer-line page-width">
+          <a className="wordmark" href="#top">
+            dwertyfa<span className="wordmark-reg">®</span>
+          </a>
+          <span>СОБРАНО ИЗ КОДА И ЛЮБОПЫТСТВА · 2026</span>
+          <a href="#top">Вернуться на Землю ↑</a>
         </div>
       </footer>
     </>

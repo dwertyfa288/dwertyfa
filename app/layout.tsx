@@ -1,31 +1,24 @@
 import type { Metadata } from "next";
-import { Manrope, Cormorant_Garamond, Geist_Mono } from "next/font/google";
+import { Golos_Text, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Manrope({
+const display = Golos_Text({
   variable: "--font-display",
   subsets: ["latin", "cyrillic"],
   display: "swap",
 });
 
-const editorial = Cormorant_Garamond({
-  variable: "--font-editorial",
+const mono = IBM_Plex_Mono({
+  variable: "--font-mono-ui",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "dwertyfa — Full-stack разработчик",
   description:
-    "Код. Форма. Впечатление. Разрабатываю сайты и цифровые продукты — от архитектуры до выразительного интерфейса. Nova Prestige, Roxy Boost и другие проекты.",
+    "Разработка в другом измерении. Портфолио dwertyfa: сайты, цифровые продукты, интерактивные интерфейсы. Nova Prestige, Roxy Boost, danek montage и Hey Ksusha.",
   icons: { icon: `${process.env.BASE_PATH ?? ""}/favicon.svg` },
   keywords: [
     "full-stack разработчик",
@@ -58,11 +51,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body
-        className={`${display.variable} ${editorial.variable} ${geistMono.variable}`}
-      >
-        {children}
-      </body>
+      <body className={`${display.variable} ${mono.variable}`}>{children}</body>
     </html>
   );
 }

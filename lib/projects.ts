@@ -1,0 +1,58 @@
+export const projects = [
+  {
+    id: "nova",
+    number: "01",
+    name: "Nova Prestige",
+    lineOne: "Nova",
+    lineTwo: "Prestige.",
+    category: "НЕДВИЖИМОСТЬ",
+    type: "Промо-сайт",
+    href: "https://novaprestige.ru/",
+    description:
+      "Архитектура, которую хочется рассматривать. Сайт приватного жилого дома в центре Бишкека — с вниманием к атмосфере и деталям.",
+    tags: ["Веб-разработка", "Адаптив", "Анимации"],
+    color: "#b9e6d2",
+  },
+  {
+    id: "roxy",
+    number: "02",
+    name: "Roxy Boost",
+    lineOne: "Roxy",
+    lineTwo: "Boost.",
+    category: "ЦИФРОВОЙ ПРОДУКТ",
+    type: "VPN-сервис",
+    href: "https://roxyvpn.ru/",
+    description:
+      "Свобода без лишних сложностей. Полный цикл разработки VPN-продукта: инфраструктура, серверная логика, приложение и сайт.",
+    tags: ["Full-stack", "Инфраструктура", "Web app"],
+    color: "#c7baff",
+  },
+  {
+    id: "montage",
+    number: "03",
+    name: "danek montage",
+    lineOne: "danek",
+    lineTwo: "montage.",
+    category: "КРЕАТИВНОЕ ПОРТФОЛИО",
+    type: "Видеомонтаж",
+    href: "https://fazedanek-hub.github.io/danekmontage/",
+    description:
+      "Ритм, характер и ничего случайного в кадре. Портфолио видеомонтажёра, в котором движение становится частью истории.",
+    tags: ["React", "Motion UI", "Адаптив"],
+    color: "#ffa98e",
+  },
+  {
+    id: "ksusha",
+    number: "04",
+    name: "Hey Ksusha",
+    lineOne: "Hey",
+    lineTwo: "Ksusha.",
+    category: "ОБРАЗОВАНИЕ",
+    type: "Лендинг интенсива",
+    href: "https://heyksusha.ru/intensive",
+    description:
+      "Тёплая, выразительная история с понятным следующим шагом. Лендинг интенсива: визуальная подача, запись и платёжная интеграция.",
+    tags: ["Арт-дирекшн", "Лендинг", "Платежи"],
+    color: "#ebc9a6",
+  },
+];
