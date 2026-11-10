@@ -1,0 +1,102 @@
+.frame {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 6px;
+  padding: 18px clamp(16px, 2.2vw, 28px) 24px;
+  isolation: isolate;
+}
+
+.grid {
+  background-image: radial-gradient(circle, rgba(236, 235, 229, 0.12) 1px, transparent 1.3px);
+  background-size: 24px 24px;
+  background-position: 11px 11px;
+}
+
+.head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  color: var(--grey);
+  padding-bottom: 14px;
+}
+
+.labelHead {
+  position: relative;
+  color: var(--paper);
+}
+
+.labelHead::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -9px;
+  height: 2px;
+  background: var(--signal);
+}
+
+.meta {
+  text-align: right;
+}
+
+.fig {
+  position: absolute;
+  right: clamp(16px, 2.2vw, 28px);
+  bottom: 10px;
+  color: var(--grey);
+  font-size: 10px;
+}
+
+.marks {
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.marks i {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--grey);
+  border-style: solid;
+  border-width: 0;
+}
+
+.marks i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+
+.marks i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+
+.marks i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+.marks i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+@media (max-width: 640px) {
+  .meta {
+    display: none;
+  }
+}

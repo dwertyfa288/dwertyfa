@@ -1,0 +1,71 @@
+.grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.cell {
+  display: grid;
+  gap: 6px;
+  padding: 8px clamp(14px, 2vw, 26px) 6px;
+}
+
+.cell:first-child {
+  padding-left: 0;
+}
+
+.cell + .cell {
+  border-left: 1px solid var(--line);
+}
+
+.value {
+  font-weight: 800;
+  font-size: clamp(44px, 5.4vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.label {
+  font-size: 15px;
+  color: var(--paper);
+}
+
+.bar {
+  height: 2px;
+  background: var(--line);
+  margin-top: 8px;
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  width: var(--fill);
+  background: var(--signal);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.4s var(--ease-cut) 0.3s;
+}
+
+:global(.is-visible) .bar i {
+  transform: scaleX(1);
+}
+
+.note {
+  color: var(--grey);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 22px;
+  }
+
+  .cell:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

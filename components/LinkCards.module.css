@@ -1,0 +1,83 @@
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  padding: 16px 20px 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  transition:
+    border-color 0.3s,
+    background 0.3s;
+}
+
+.card:hover {
+  border-color: var(--signal);
+  background: #171614;
+}
+
+.index {
+  grid-column: 1;
+  font-size: 10px;
+}
+
+.name {
+  position: relative;
+  justify-self: start;
+  grid-column: 1;
+  font-weight: 700;
+  font-size: clamp(18px, 1.7vw, 22px);
+  letter-spacing: -0.02em;
+  margin-top: 4px;
+}
+
+.name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 2px;
+  background: var(--signal);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+
+.note {
+  grid-column: 1;
+  color: var(--grey);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  margin-top: 10px;
+}
+
+.arrow {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  align-self: center;
+  width: 26px;
+  height: 26px;
+  color: var(--paper);
+  transition:
+    transform 0.4s var(--ease),
+    color 0.3s;
+}
+
+.card:hover .arrow {
+  color: var(--signal);
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

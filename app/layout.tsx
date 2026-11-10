@@ -1,57 +1,43 @@
-import type { Metadata } from "next";
-import { Golos_Text, IBM_Plex_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const display = Golos_Text({
-  variable: "--font-display",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-mono-ui",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin", "cyrillic"],
-  weight: ["400"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
+
+const title = "dwertyfa — full-stack разработчик";
+const description =
+  "Сайты, голосовые интерфейсы, плагины для Astra, Telegram-боты и AI-инструменты. От идеи до продукта.";
 
 export const metadata: Metadata = {
-  title: "dwertyfa — Full-stack разработчик",
-  description:
-    "Разработка в другом измерении. Портфолио dwertyfa: сайты, цифровые продукты, интерактивные интерфейсы. Nova Prestige, Roxy Boost, danek montage и Hey Ksusha.",
+  title,
+  description,
   icons: { icon: `${process.env.BASE_PATH ?? ""}/favicon.svg` },
-  keywords: [
-    "full-stack разработчик",
-    "веб-разработка",
-    "React",
-    "Next.js",
-    "инфраструктура",
-    "портфолио разработчика",
-  ],
   authors: [{ name: "dwertyfa" }],
-  openGraph: {
-    title: "dwertyfa — Full-stack разработчик",
-    description:
-      "От инфраструктуры до интерфейса. Избранные проекты и технологическая экспертиза.",
-    type: "website",
-    locale: "ru_RU",
-  },
-  twitter: {
-    card: "summary",
-    title: "dwertyfa — Full-stack разработчик",
-    description:
-      "От инфраструктуры до интерфейса. Избранные проекты и технологическая экспертиза.",
-  },
+  keywords: ["full-stack разработчик", "веб-разработка", "Next.js", "Three.js", "Telegram-боты", "AI-инструменты"],
+  openGraph: { title, description, type: "website", locale: "ru_RU" },
+  twitter: { card: "summary", title, description },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  themeColor: "#0e0e0d",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ru">
-      <body className={`${display.variable} ${mono.variable}`}>{children}</body>
+    <html lang="ru" className={`${inter.variable} ${jetbrains.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
