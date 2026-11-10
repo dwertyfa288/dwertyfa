@@ -1,6 +1,7 @@
 import ScrambleText from "../effects/ScrambleText";
 import Frame, { CropMarks } from "../Frame";
 import Scene from "../Scene";
+import NodePing from "./NodePing";
 import RoleTicker from "./RoleTicker";
 import SignalScope from "./SignalScope";
 import StackPicker from "./StackPicker";
@@ -42,7 +43,7 @@ export default function Hero() {
           <Scene name="globe" className={styles.globe} />
           <figcaption className={`mono ${styles.caption}`}>
             <span>fig. 01 — сеть</span>
-            <span className="signal">● 14 узлов online</span>
+            <NodePing />
           </figcaption>
         </figure>
       </div>

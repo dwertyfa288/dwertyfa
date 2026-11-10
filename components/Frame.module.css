@@ -42,7 +42,7 @@
   transition: transform 1.1s var(--ease-cut) 0.2s;
 }
 
-:global(.is-visible) > .head .labelHead::after {
+[data-shown] > .head .labelHead::after {
   transform: scaleX(1);
 }
 
@@ -59,7 +59,7 @@
   transform: scaleX(0.2);
 }
 
-.frame:global(.is-visible)::before {
+.frame[data-shown]::before {
   animation: sweep 1.6s var(--ease-cut) 0.1s;
 }
 
@@ -108,23 +108,23 @@
     opacity 0.9s;
 }
 
-[data-draw]:not(:global(.is-visible)) > .marks i {
+[data-draw]:not([data-shown]) > .marks i {
   opacity: 0;
 }
 
-[data-draw]:not(:global(.is-visible)) > .marks i:nth-child(1) {
+[data-draw]:not([data-shown]) > .marks i:nth-child(1) {
   translate: -10px -10px;
 }
 
-[data-draw]:not(:global(.is-visible)) > .marks i:nth-child(2) {
+[data-draw]:not([data-shown]) > .marks i:nth-child(2) {
   translate: 10px -10px;
 }
 
-[data-draw]:not(:global(.is-visible)) > .marks i:nth-child(3) {
+[data-draw]:not([data-shown]) > .marks i:nth-child(3) {
   translate: -10px 10px;
 }
 
-[data-draw]:not(:global(.is-visible)) > .marks i:nth-child(4) {
+[data-draw]:not([data-shown]) > .marks i:nth-child(4) {
   translate: 10px 10px;
 }
 

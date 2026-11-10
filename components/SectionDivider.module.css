@@ -42,7 +42,7 @@
   transition: background-position 1.6s var(--ease-cut) 0.3s;
 }
 
-:global(.is-visible) > .number {
+[data-shown] > .number {
   background-position: 0 100%;
 }
 

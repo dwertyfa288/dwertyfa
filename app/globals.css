@@ -136,7 +136,7 @@ ol {
   transition-delay: var(--delay, 0s);
 }
 
-[data-reveal].is-visible {
+[data-reveal][data-shown] {
   opacity: 1;
   transform: none;
 }

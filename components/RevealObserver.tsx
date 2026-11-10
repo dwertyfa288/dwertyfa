@@ -8,7 +8,7 @@ export default function RevealObserver() {
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
+          entry.target.setAttribute("data-shown", "");
           observer.unobserve(entry.target);
         });
       },

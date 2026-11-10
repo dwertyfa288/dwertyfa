@@ -48,7 +48,7 @@
   transition: transform 1.4s var(--ease-cut) 0.3s;
 }
 
-:global(.is-visible) .bar i {
+[data-shown] .bar i {
   transform: scaleX(1);
 }
 
