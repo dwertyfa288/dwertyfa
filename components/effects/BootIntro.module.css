@@ -1,0 +1,86 @@
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  background-color: var(--ink);
+  background-image: radial-gradient(circle, rgba(236, 235, 229, 0.12) 1px, transparent 1.3px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  animation: wipe 0.8s var(--ease-cut) 1.45s forwards;
+}
+
+@keyframes wipe {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+.panel {
+  display: grid;
+  gap: 18px;
+  width: min(420px, 100% - 48px);
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 42px;
+  letter-spacing: -0.05em;
+  animation: fadeUp 0.5s var(--ease) both;
+}
+
+.lines {
+  display: grid;
+  gap: 6px;
+  font-family: var(--font-code);
+  font-size: 12px;
+  color: var(--grey);
+}
+
+.lines li {
+  display: flex;
+  gap: 10px;
+  animation: fadeUp 0.35s var(--ease) both;
+  animation-delay: calc(0.2s + var(--i) * 0.22s);
+}
+
+.ok {
+  margin-left: auto;
+  color: var(--paper);
+}
+
+.progress {
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--signal);
+  transform-origin: left;
+  animation: load 1.3s var(--ease-cut) 0.1s both;
+  box-shadow: 0 0 12px rgba(255, 91, 20, 0.7);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@keyframes load {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot {
+    display: none;
+  }
+}

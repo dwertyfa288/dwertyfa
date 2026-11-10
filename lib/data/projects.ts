@@ -23,8 +23,8 @@ export const webProjects: WebProject[] = [
     image: "nova.webp",
   },
   {
-    id: "roxy",
-    name: "Roxy Boost",
+    id: "primeboost",
+    name: "Prime Boost",
     category: "Цифровой продукт",
     type: "VPN-сервис",
     href: "https://roxyvpn.ru/",

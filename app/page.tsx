@@ -1,4 +1,5 @@
 import Capabilities from "@/components/Capabilities";
+import BootIntro from "@/components/effects/BootIntro";
 import Crosshair from "@/components/effects/Crosshair";
 import Contact from "@/components/Contact";
 import Header from "@/components/Header";
@@ -16,6 +17,7 @@ export default function Home() {
       <a className="skip-link" href="#work">
         К проектам
       </a>
+      <BootIntro />
       <RevealObserver />
       <Crosshair />
       <Header />

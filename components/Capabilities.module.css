@@ -65,7 +65,8 @@
 }
 
 .item:hover,
-.item:focus-visible {
+.item:focus-visible,
+.itemActive {
   background: linear-gradient(to right, rgba(255, 91, 20, 0.08), transparent 70%);
 }
 
@@ -76,7 +77,8 @@
 }
 
 .item:hover .number,
-.item:focus-visible .number {
+.item:focus-visible .number,
+.itemActive .number {
   color: var(--signal);
 }
 

@@ -3,7 +3,7 @@ import { facetFragment, facetVertex } from "./facetShader";
 import { damp, palette } from "./palette";
 import type { SceneFactory } from "./runner";
 
-import { STACK_FOCUS_EVENT } from "./events";
+import { STACK_FOCUS_EVENT, STACK_HOVER_EVENT } from "./events";
 
 const WIDTH = 3.2;
 const DEPTH = 2.2;
@@ -70,7 +70,10 @@ export const createStackScene: SceneFactory = ({ scene, camera, hover }) => {
 
   const slabGeometry = new THREE.BoxGeometry(WIDTH, THICKNESS, DEPTH);
   const slabEdges = new THREE.EdgesGeometry(slabGeometry);
-  const disposables: { dispose: () => void }[] = [slabGeometry, slabEdges];
+  const hitGeometry = new THREE.BoxGeometry(WIDTH * 1.05, GAP * 0.92, DEPTH * 1.05);
+  const hitMaterial = new THREE.MeshBasicMaterial();
+  const disposables: { dispose: () => void }[] = [slabGeometry, slabEdges, hitGeometry, hitMaterial];
+  const hitBoxes: THREE.Mesh[] = [];
 
   const layers = glyphBuilders.map((build, index) => {
     const uniforms = {
@@ -91,8 +94,13 @@ export const createStackScene: SceneFactory = ({ scene, camera, hover }) => {
     const glyph = new THREE.LineSegments(glyphGeometry, glyphMaterial);
     glyph.position.y = THICKNESS / 2 + 0.002;
 
+    const hitBox = new THREE.Mesh(hitGeometry, hitMaterial);
+    hitBox.visible = false;
+    hitBox.userData.layerIndex = index;
+    hitBoxes.push(hitBox);
+
     const layer = new THREE.Group();
-    layer.add(slab, edges, glyph);
+    layer.add(slab, edges, glyph, hitBox);
     layer.position.y = ((LAYER_COUNT - 1) / 2 - index) * GAP;
     scene.add(layer);
     disposables.push(slabMaterial, edgeMaterial, glyphGeometry, glyphMaterial);
@@ -113,7 +121,16 @@ export const createStackScene: SceneFactory = ({ scene, camera, hover }) => {
   disposables.push(spineGeometry, spineMaterial);
 
   let pinned: number | null = null;
+  let hovered: number | null = null;
   let spread = 1;
+  const raycaster = new THREE.Raycaster();
+
+  const pickLayer = () => {
+    if (!hover.inside) return null;
+    raycaster.setFromCamera(hover.local, camera);
+    const hit = raycaster.intersectObjects(hitBoxes, false)[0];
+    return hit ? (hit.object.userData.layerIndex as number) : hovered;
+  };
   const onFocus = (event: Event) => {
     const detail = (event as CustomEvent<number | null>).detail;
     pinned = typeof detail === "number" ? detail : null;
@@ -131,12 +148,16 @@ export const createStackScene: SceneFactory = ({ scene, camera, hover }) => {
     },
     update(time, delta) {
       const step = delta || 0.016;
-      spread = damp(spread, hover.inside ? 1.45 : 1, 4, step);
-      const hoverLayer = hover.inside ? Math.round((1 - (hover.local.y + 1) / 2) * (LAYER_COUNT - 1)) : null;
-      const active = pinned ?? hoverLayer ?? Math.floor(time / CYCLE_SECONDS) % LAYER_COUNT;
+      spread = damp(spread, hover.inside ? 1.35 : 1, 4, step);
+      const picked = pickLayer();
+      if (picked !== hovered) {
+        hovered = picked;
+        window.dispatchEvent(new CustomEvent(STACK_HOVER_EVENT, { detail: hovered }));
+      }
+      const active = pinned ?? hovered ?? Math.floor(time / CYCLE_SECONDS) % LAYER_COUNT;
       layers.forEach((item, index) => {
         const isActive = index === active;
-        item.glow = damp(item.glow, isActive ? 1 : 0, 6, delta || 1);
+        item.glow = damp(item.glow, isActive ? 1 : 0, 7, step);
         item.uniforms.uGlow.value = item.glow;
         item.layer.position.x = item.glow * 0.55;
         item.layer.position.y = item.baseY * item.layer.scale.y * spread + Math.sin(time * 1.2 + index) * 0.04;

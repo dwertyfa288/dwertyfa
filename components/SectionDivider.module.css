@@ -34,6 +34,16 @@
   letter-spacing: -0.06em;
   color: transparent;
   -webkit-text-stroke: 1px var(--grey);
+  background: linear-gradient(to top, var(--signal) 50%, transparent 50%);
+  background-size: 100% 200%;
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-position 1.6s var(--ease-cut) 0.3s;
+}
+
+:global(.is-visible) > .number {
+  background-position: 0 100%;
 }
 
 .title {

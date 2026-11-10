@@ -23,13 +23,13 @@ export default function Hero() {
         <div className={styles.intro}>
           <h1 className={styles.name}>
             <span className={styles.nameLine}>
-              <ScrambleText text="dwertyfa" delay={250} />
+              <ScrambleText text="dwertyfa" delay={1750} />
               <span className="signal">.</span>
             </span>
           </h1>
           <p className={styles.lead}>Сайты, голосовые интерфейсы и интеграции — от идеи до продукта.</p>
           <div className={styles.actions}>
-            <a className={styles.primary} href="#work">
+            <a className={styles.primary} href="#work" data-magnetic>
               Смотреть работы <span aria-hidden="true">↓</span>
             </a>
             <a className={`mono ${styles.secondary}`} href="#contact">

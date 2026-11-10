@@ -21,7 +21,7 @@ export default function Products() {
             data-reveal
             style={{ "--delay": `${(index % 3) * 0.08}s` } as React.CSSProperties}
           >
-            <a className={styles.card} href={product.href} target="_blank" rel="noreferrer">
+            <a className={styles.card} href={product.href} target="_blank" rel="noreferrer" data-spotlight>
               <CropMarks />
               <div className={styles.cardHead}>
                 <span className="mono">

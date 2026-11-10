@@ -21,7 +21,7 @@ export default function Contact() {
               </span>
             </h2>
             <div className={styles.actions} data-reveal>
-              <a className={styles.cta} href={links.telegram} target="_blank" rel="noreferrer">
+              <a className={styles.cta} href={links.telegram} target="_blank" rel="noreferrer" data-magnetic>
                 Написать в Telegram <Arrow />
               </a>
               <span className={`mono ${styles.handle}`}>{links.telegramHandle}</span>

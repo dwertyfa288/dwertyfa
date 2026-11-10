@@ -159,6 +159,26 @@ ol {
   }
 }
 
+[data-spotlight] {
+  isolation: isolate;
+}
+
+[data-spotlight]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 91, 20, 0.14), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+[data-spotlight]:hover::after {
+  opacity: 1;
+}
+
 .stack {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

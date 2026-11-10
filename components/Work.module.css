@@ -137,6 +137,8 @@
 
   .rowLink:hover .name {
     transform: translateX(12px);
+    animation: glitch 0.45s steps(2, end);
+    text-shadow: 2px 0 var(--signal);
   }
 
   .rowLink:hover .go {
@@ -248,6 +250,25 @@
   justify-content: space-between;
   color: var(--grey);
   font-size: 10px;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: -4px 0 var(--signal);
+    clip-path: inset(0 0 55% 0);
+  }
+  35% {
+    text-shadow: 4px 0 var(--signal);
+    clip-path: inset(45% 0 0 0);
+  }
+  70% {
+    text-shadow: -2px 0 var(--signal);
+    clip-path: inset(20% 0 20% 0);
+  }
+  100% {
+    text-shadow: 2px 0 var(--signal);
+    clip-path: inset(0);
+  }
 }
 
 @media (max-width: 960px) {

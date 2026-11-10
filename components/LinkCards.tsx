@@ -14,7 +14,7 @@ export default function LinkCards() {
     <ul className={styles.row}>
       {cards.map((card, index) => (
         <li key={card.name} data-reveal style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}>
-          <a className={styles.card} href={card.href} target="_blank" rel="noreferrer">
+          <a className={styles.card} href={card.href} target="_blank" rel="noreferrer" data-spotlight>
             <CropMarks />
             <span className={`mono signal ${styles.index}`}>{String(index + 1).padStart(2, "0")}</span>
             <span className={styles.name}>{card.name}</span>

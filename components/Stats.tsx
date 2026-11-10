@@ -1,3 +1,4 @@
+import CountUp from "./effects/CountUp";
 import Frame from "./Frame";
 import { stats } from "@/lib/data/hero";
 import styles from "./Stats.module.css";
@@ -8,7 +9,7 @@ export default function Stats() {
       <ul className={styles.grid}>
         {stats.map((item, index) => (
           <li key={item.label} className={styles.cell} data-reveal style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}>
-            <span className={styles.value}>{item.value}</span>
+            <CountUp value={item.value} className={styles.value} />
             <span className={styles.label}>{item.label}</span>
             <span className={styles.bar} aria-hidden="true">
               <i style={{ "--fill": `${[100, 45, 60, 70][index]}%` } as React.CSSProperties} />

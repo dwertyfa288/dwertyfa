@@ -1,4 +1,5 @@
 .hero {
+  --boot: 1.6s;
   padding-bottom: 0;
 }
 
@@ -29,7 +30,7 @@
 
 .nameLine {
   display: block;
-  animation: reveal 1.1s var(--ease-cut) 0.1s both;
+  animation: reveal 1.1s var(--ease-cut) calc(var(--boot) + 0.1s) both;
 }
 
 @keyframes reveal {
@@ -49,14 +50,14 @@
   max-width: 520px;
   color: var(--grey);
   font-size: clamp(16px, 1.5vw, 20px);
-  animation: rise 0.9s var(--ease) 0.7s both;
+  animation: rise 0.9s var(--ease) calc(var(--boot) + 0.7s) both;
 }
 
 .actions {
   display: flex;
   align-items: center;
   gap: 22px;
-  animation: rise 0.9s var(--ease) 0.85s both;
+  animation: rise 0.9s var(--ease) calc(var(--boot) + 0.85s) both;
 }
 
 .primary {
@@ -71,12 +72,11 @@
   border-radius: 3px;
   transition:
     background 0.25s,
-    transform 0.4s var(--ease);
+    translate 0.35s var(--ease);
 }
 
 .primary:hover {
   background: var(--paper);
-  transform: translateY(-2px);
 }
 
 .secondary {
@@ -96,7 +96,7 @@
   width: 100%;
   border: 1px solid var(--line);
   background: radial-gradient(circle at 50% 50%, rgba(255, 91, 20, 0.07), transparent 62%), var(--ink);
-  animation: rise 1.2s ease 0.4s both;
+  animation: rise 1.2s ease calc(var(--boot) + 0.4s) both;
 }
 
 .globe {
@@ -120,7 +120,7 @@
   margin-top: clamp(24px, 3vw, 36px);
   background: var(--grey);
   transform-origin: left;
-  animation: grow 1.4s var(--ease-cut) 0.5s both;
+  animation: grow 1.4s var(--ease-cut) calc(var(--boot) + 0.5s) both;
 }
 
 @keyframes grow {
@@ -142,7 +142,7 @@
   gap: 10px;
   padding: 24px clamp(14px, 2vw, 26px) 26px;
   color: var(--grey);
-  animation: rise 0.9s var(--ease) 0.9s both;
+  animation: rise 0.9s var(--ease) calc(var(--boot) + 0.9s) both;
 }
 
 .column + .column {

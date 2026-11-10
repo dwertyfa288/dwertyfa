@@ -137,6 +137,8 @@ export const createPlaneScene: SceneFactory = ({ scene, camera, pointer, hover }
   const ahead = new THREE.Vector3();
   const tangent = new THREE.Vector3();
   const previousTangent = new THREE.Vector3(1, 0, 0);
+  const orientation = new THREE.Matrix4();
+  const worldUp = new THREE.Vector3(0, 1, 0);
   let bank = 0;
   let primed = false;
   let seenTaps = hover.tapCount;
@@ -165,7 +167,8 @@ export const createPlaneScene: SceneFactory = ({ scene, camera, pointer, hover }
       const roll = rollProgress < 1 ? easeInOut(rollProgress) * Math.PI * 2 : 0;
 
       plane.position.copy(position);
-      plane.lookAt(ahead.x, ahead.y, ahead.z);
+      orientation.lookAt(ahead, position, worldUp);
+      plane.quaternion.setFromRotationMatrix(orientation);
       plane.rotateZ(bank + roll);
       plane.position.y += Math.sin(time * 3.1) * 0.02;
       planeUniforms.uGlow.value = Math.sin(rollProgress * Math.PI);
