@@ -113,7 +113,7 @@ function arcPoints(from: THREE.Vector3, to: THREE.Vector3, segments: number) {
   return points;
 }
 
-export const createGlobeScene: SceneFactory = ({ scene, camera, pointer, compact }) => {
+export const createGlobeScene: SceneFactory = ({ scene, camera, pointer, hover, compact }) => {
   camera.position.set(0, 0, 10.5);
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.6);
   const random = seededRandom(288);
@@ -218,14 +218,25 @@ export const createGlobeScene: SceneFactory = ({ scene, camera, pointer, compact
   root.rotation.z = -0.18;
   scene.add(root);
 
+  let spin = 0.12;
+  let seenTaps = hover.tapCount;
+  let burst = 0;
+
   return {
     resize(width, height) {
       root.scale.setScalar(Math.min(1, (width / height) * 0.95));
     },
     update(time, delta) {
-      nodeUniforms.uTime.value = time;
-      arcUniforms.uTime.value = time;
-      globe.rotation.y = time * 0.12;
+      const step = delta || 0.016;
+      if (hover.tapCount !== seenTaps) {
+        seenTaps = hover.tapCount;
+        burst = 1;
+      }
+      burst = damp(burst, 0, 1.6, step);
+      spin = damp(spin, hover.inside ? hover.local.x * 1.4 : 0.12, 2.5, step);
+      globe.rotation.y += spin * step;
+      nodeUniforms.uTime.value += step * (1 + burst * 3);
+      arcUniforms.uTime.value += step * (1 + burst * 5);
       satellitePivot.rotation.z = time * 0.4;
       root.rotation.x = damp(root.rotation.x, 0.25 - pointer.y * 0.25, 2.5, delta);
       root.rotation.y = damp(root.rotation.y, pointer.x * 0.4, 2.5, delta);

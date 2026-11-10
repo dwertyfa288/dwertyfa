@@ -15,8 +15,9 @@ export default function Contact() {
             <h2 className={styles.title} data-reveal>
               Есть идея?
               <br />
-              <span className={styles.titleMuted}>Соберём из неё живой продукт</span>
-              <span className="signal">.</span>
+              <span className={styles.titleMuted}>
+                Соберём из неё живой продукт<span className="signal">.</span>
+              </span>
             </h2>
             <div className={styles.actions} data-reveal>
               <a className={styles.cta} href={links.telegram} target="_blank" rel="noreferrer">

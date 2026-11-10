@@ -63,7 +63,7 @@ function aiGlyph() {
 
 const glyphBuilders = [webGlyph, serverGlyph, voiceGlyph, aiGlyph];
 
-export const createStackScene: SceneFactory = ({ scene, camera }) => {
+export const createStackScene: SceneFactory = ({ scene, camera, hover }) => {
   camera.position.set(6.2, 5.2, 6.2);
   camera.lookAt(0, 0, 0);
   camera.fov = 30;
@@ -113,6 +113,7 @@ export const createStackScene: SceneFactory = ({ scene, camera }) => {
   disposables.push(spineGeometry, spineMaterial);
 
   let pinned: number | null = null;
+  let spread = 1;
   const onFocus = (event: Event) => {
     const detail = (event as CustomEvent<number | null>).detail;
     pinned = typeof detail === "number" ? detail : null;
@@ -129,13 +130,16 @@ export const createStackScene: SceneFactory = ({ scene, camera }) => {
       spineLines.scale.setScalar(scale);
     },
     update(time, delta) {
-      const active = pinned ?? Math.floor(time / CYCLE_SECONDS) % LAYER_COUNT;
+      const step = delta || 0.016;
+      spread = damp(spread, hover.inside ? 1.45 : 1, 4, step);
+      const hoverLayer = hover.inside ? Math.round((1 - (hover.local.y + 1) / 2) * (LAYER_COUNT - 1)) : null;
+      const active = pinned ?? hoverLayer ?? Math.floor(time / CYCLE_SECONDS) % LAYER_COUNT;
       layers.forEach((item, index) => {
         const isActive = index === active;
         item.glow = damp(item.glow, isActive ? 1 : 0, 6, delta || 1);
         item.uniforms.uGlow.value = item.glow;
         item.layer.position.x = item.glow * 0.55;
-        item.layer.position.y = item.baseY * item.layer.scale.y + Math.sin(time * 1.2 + index) * 0.04;
+        item.layer.position.y = item.baseY * item.layer.scale.y * spread + Math.sin(time * 1.2 + index) * 0.04;
         item.edgeMaterial.color.copy(idleColor).lerp(activeColor, item.glow);
         item.glyphMaterial.color.copy(idleColor).lerp(activeColor, item.glow);
       });

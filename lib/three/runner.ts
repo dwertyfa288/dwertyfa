@@ -1,9 +1,17 @@
 import * as THREE from "three";
 
+export type HoverState = {
+  local: THREE.Vector2;
+  inside: boolean;
+  tapCount: number;
+  tap: THREE.Vector2;
+};
+
 export type SceneContext = {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   pointer: THREE.Vector2;
+  hover: HoverState;
   compact: boolean;
 };
 
@@ -32,7 +40,8 @@ export function mountScene(host: HTMLElement, factory: SceneFactory) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
   const pointer = new THREE.Vector2();
-  const sceneModule = factory({ scene, camera, pointer, compact });
+  const hover: HoverState = { local: new THREE.Vector2(), inside: false, tapCount: 0, tap: new THREE.Vector2() };
+  const sceneModule = factory({ scene, camera, pointer, hover, compact });
 
   let elapsed = 0;
   let lastTime = 0;
@@ -74,11 +83,30 @@ export function mountScene(host: HTMLElement, factory: SceneFactory) {
     }
   };
 
+  const toLocal = (event: PointerEvent, target: THREE.Vector2) => {
+    const rect = host.getBoundingClientRect();
+    target.set(
+      ((event.clientX - rect.left) / rect.width) * 2 - 1,
+      -((event.clientY - rect.top) / rect.height) * 2 + 1,
+    );
+    return Math.abs(target.x) <= 1 && Math.abs(target.y) <= 1;
+  };
+
   const onPointerMove = (event: PointerEvent) => {
     pointer.set(
       (event.clientX / window.innerWidth) * 2 - 1,
       -(event.clientY / window.innerHeight) * 2 + 1,
     );
+    if (onScreen) hover.inside = toLocal(event, hover.local);
+  };
+
+  const onPointerDown = (event: PointerEvent) => {
+    if (!onScreen) return;
+    if (toLocal(event, hover.tap)) hover.tapCount += 1;
+  };
+
+  const onPointerOut = (event: PointerEvent) => {
+    if (!event.relatedTarget) hover.inside = false;
   };
 
   const resizeObserver = new ResizeObserver(resize);
@@ -94,7 +122,9 @@ export function mountScene(host: HTMLElement, factory: SceneFactory) {
   visibilityObserver.observe(host);
 
   document.addEventListener("visibilitychange", syncLoop);
-  if (!compact) window.addEventListener("pointermove", onPointerMove, { passive: true });
+  window.addEventListener("pointermove", onPointerMove, { passive: true });
+  window.addEventListener("pointerdown", onPointerDown, { passive: true });
+  document.addEventListener("pointerout", onPointerOut, { passive: true });
   resize();
 
   return () => {
@@ -103,6 +133,8 @@ export function mountScene(host: HTMLElement, factory: SceneFactory) {
     visibilityObserver.disconnect();
     document.removeEventListener("visibilitychange", syncLoop);
     window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerdown", onPointerDown);
+    document.removeEventListener("pointerout", onPointerOut);
     sceneModule.dispose();
     renderer.dispose();
     renderer.domElement.remove();

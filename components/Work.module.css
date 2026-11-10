@@ -22,7 +22,7 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to top right, rgba(14, 14, 13, 0.92) 18%, transparent 60%);
+  background: linear-gradient(to top right, rgba(14, 14, 13, 0.8) 8%, transparent 42%);
 }
 
 .fieldText {
