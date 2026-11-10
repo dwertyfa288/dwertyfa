@@ -1,0 +1,124 @@
+.crosshair {
+  --x: -100px;
+  --y: -100px;
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.crosshair[data-visible="true"] {
+  opacity: 1;
+}
+
+.lineX,
+.lineY {
+  position: absolute;
+  background: rgba(236, 235, 229, 0.09);
+}
+
+.lineX {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  transform: translateY(var(--y));
+}
+
+.lineY {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  transform: translateX(var(--x));
+}
+
+.reticle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
+  transition:
+    width 0.35s var(--ease),
+    height 0.35s var(--ease);
+}
+
+.reticle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px 0 0 -1.5px;
+  background: var(--signal);
+  transition: transform 0.3s var(--ease);
+}
+
+.crosshair[data-active="true"] .reticle::after {
+  transform: scale(0);
+}
+
+.reticle i {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 0 solid var(--signal);
+  transition: transform 0.3s var(--ease);
+}
+
+.reticle i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-width: 1px 0 0 1px;
+}
+
+.reticle i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-width: 1px 1px 0 0;
+}
+
+.reticle i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 1px 1px;
+}
+
+.reticle i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-width: 0 1px 1px 0;
+}
+
+.crosshair[data-active="true"] .reticle {
+  width: 44px;
+  height: 44px;
+}
+
+.crosshair[data-pressed="true"] .reticle {
+  width: 12px;
+  height: 12px;
+}
+
+.readout {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(calc(var(--x) + 16px), calc(var(--y) + 14px));
+  font-family: var(--font-code);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--grey);
+  white-space: nowrap;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .crosshair {
+    display: none;
+  }
+}

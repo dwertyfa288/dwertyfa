@@ -1,4 +1,5 @@
 import Arrow from "./Arrow";
+import ScrambleText from "./effects/ScrambleText";
 import Frame, { CropMarks } from "./Frame";
 import Scene from "./Scene";
 import { links } from "@/lib/data/links";
@@ -13,7 +14,7 @@ export default function Contact() {
         <div className={styles.layout}>
           <div className={styles.copy}>
             <h2 className={styles.title} data-reveal>
-              Есть идея?
+              <ScrambleText text="Есть идея?" />
               <br />
               <span className={styles.titleMuted}>
                 Соберём из неё живой продукт<span className="signal">.</span>

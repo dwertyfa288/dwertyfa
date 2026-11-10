@@ -1,3 +1,4 @@
+import ScrambleText from "../effects/ScrambleText";
 import Frame, { CropMarks } from "../Frame";
 import Scene from "../Scene";
 import RoleTicker from "./RoleTicker";
@@ -22,7 +23,8 @@ export default function Hero() {
         <div className={styles.intro}>
           <h1 className={styles.name}>
             <span className={styles.nameLine}>
-              dwertyfa<span className="signal">.</span>
+              <ScrambleText text="dwertyfa" delay={250} />
+              <span className="signal">.</span>
             </span>
           </h1>
           <p className={styles.lead}>Сайты, голосовые интерфейсы и интеграции — от идеи до продукта.</p>

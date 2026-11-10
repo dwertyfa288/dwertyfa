@@ -1,3 +1,4 @@
+import ScrambleText from "./effects/ScrambleText";
 import Frame from "./Frame";
 import styles from "./SectionDivider.module.css";
 
@@ -14,7 +15,9 @@ export default function SectionDivider({ number, title, text, count }: Props) {
       <div className={styles.body} data-reveal>
         <span className={styles.number}>{number}</span>
         <div>
-          <h2 className={styles.title}>{title}</h2>
+          <h2 className={styles.title}>
+            <ScrambleText text={title} />
+          </h2>
           <p className={styles.text}>{text}</p>
         </div>
         <span className={`mono ${styles.hint}`}>

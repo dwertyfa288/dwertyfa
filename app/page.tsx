@@ -1,4 +1,5 @@
 import Capabilities from "@/components/Capabilities";
+import Crosshair from "@/components/effects/Crosshair";
 import Contact from "@/components/Contact";
 import Header from "@/components/Header";
 import Hero from "@/components/hero/Hero";
@@ -16,6 +17,7 @@ export default function Home() {
         К проектам
       </a>
       <RevealObserver />
+      <Crosshair />
       <Header />
       <div className="page">
         <main className="stack">

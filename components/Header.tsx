@@ -1,3 +1,4 @@
+import ScrollProgress from "./effects/ScrollProgress";
 import LocalClock from "./LocalClock";
 import styles from "./Header.module.css";
 
@@ -21,7 +22,10 @@ export default function Header() {
           </a>
         ))}
       </nav>
-      <LocalClock className={`mono ${styles.clock}`} />
+      <div className={styles.right}>
+        <ScrollProgress />
+        <LocalClock className={`mono ${styles.clock}`} />
+      </div>
     </header>
   );
 }

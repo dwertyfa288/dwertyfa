@@ -14,7 +14,7 @@ export default function RevealObserver() {
       },
       { rootMargin: "0px 0px -10% 0px" },
     );
-    document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
+    document.querySelectorAll("[data-reveal], [data-draw]").forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, []);
 

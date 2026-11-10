@@ -1,0 +1,23 @@
+.track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  overflow: hidden;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  background: var(--signal);
+  transform: scaleX(0);
+  transform-origin: left;
+  box-shadow: 0 0 12px rgba(255, 91, 20, 0.6);
+}
+
+.value {
+  color: var(--signal);
+  font-size: 10px;
+  min-width: 4ch;
+}

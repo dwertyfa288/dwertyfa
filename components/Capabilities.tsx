@@ -1,4 +1,5 @@
 import CapabilityList from "./CapabilityList";
+import ScrambleText from "./effects/ScrambleText";
 import Frame, { CropMarks } from "./Frame";
 import Scene from "./Scene";
 import { steps } from "@/lib/data/capabilities";
@@ -18,7 +19,8 @@ export default function Capabilities() {
         </figure>
         <div className={styles.side}>
           <h2 className={styles.title} data-reveal>
-            Собираю продукт целиком<span className="signal">.</span>
+            <ScrambleText text="Собираю продукт целиком" />
+            <span className="signal">.</span>
           </h2>
           <p className={styles.lead} data-reveal>
             От интерфейса до сервера — каждый слой под одной рукой. Наведите на слой.

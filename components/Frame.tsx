@@ -24,7 +24,7 @@ export function CropMarks({ className = "" }: { className?: string }) {
 export default function Frame({ label, meta, fig, id, className = "", grid = true, children }: Props) {
   const [head, ...rest] = label.split(" / ");
   return (
-    <section id={id} className={`${styles.frame} ${grid ? styles.grid : ""} ${className}`}>
+    <section id={id} data-draw className={`${styles.frame} ${grid ? styles.grid : ""} ${className}`}>
       <CropMarks />
       <header className={styles.head}>
         <span className="mono">

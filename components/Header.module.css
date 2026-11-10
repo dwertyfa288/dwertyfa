@@ -33,8 +33,14 @@
   color: var(--signal);
 }
 
-.clock {
+.right {
   justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clock {
   color: var(--grey);
 }
 
